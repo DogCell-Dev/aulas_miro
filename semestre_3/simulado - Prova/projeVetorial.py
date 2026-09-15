@@ -1,82 +1,30 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Pontos da trajetória
+print("--- Questão 5: Projeção Vetorial ---")
 
-ax = int(input("Digite o valor de ux: "))
-ay = int(input("Digite o valor de uy: "))
+# Capturando os vetores pelo teclado usando input()
+ux = float(input("Digite a componente x do vetor u: "))
+uy = float(input("Digite a componente y do vetor u: "))
+vx = float(input("Digite a componente x do vetor v: "))
+vy = float(input("Digite a componente y do vetor v: "))
 
-bx = int(input("Digite o valor de vx: "))
-by = int(input("Digite o valor de vy: "))
+# Criando os arrays do NumPy
+u = np.array([ux, uy])
+v = np.array([vx, vy])
 
-cx = int(input("Digite o valor de ux: "))
-cy = int(input("Digite o valor de uy: "))
+# a) Calcule o produto escalar u . v
+produto_escalar = np.dot(u, v)
 
-A = np.array([ax,ay])
-B = np.array([bx,by])
-C = np.array([cx,cy])
+# b) Calcule ||v||² e o coeficiente k = (u . v) / ||v||²
+# A norma ao quadrado de v é simplesmente o produto escalar de v por ele mesmo (v . v)
+norma_v_quadrado = np.dot(v, v)
+k = produto_escalar / norma_v_quadrado
 
-# Vetores de deslocamento
-AB = B - A
-BC = C - B
+# c) Calcule e apresente o vetor proj_v(u)
+proj_v_u = k * v
 
-# Distâncias
-dist_AB = np.linalg.norm(AB)
-dist_BC = np.linalg.norm(BC)
-
-# Produto escalar
-produto_escalar = np.dot(AB, BC)
-
-# Ângulo entre os vetores
-cos_theta = produto_escalar / (dist_AB * dist_BC)
-theta_rad = np.arccos(cos_theta)
-theta_graus = np.degrees(theta_rad)
-
-# Exibição dos resultados
-print("Vetor AB =", AB)
-print("Vetor BC =", BC)
-print(f"Distância AB = {dist_AB:.2f}")
-print(f"Distância BC = {dist_BC:.2f}")
-print("Produto escalar =", produto_escalar)
-print(f"Ângulo = {theta_graus:.2f}°")
-
-# -----------------------------------
-# Representação gráfica
-# -----------------------------------
-# Trajetória A -> B -> C
-x = [A[0], B[0], C[0]]
-y = [A[1], B[1], C[1]]
-
-plt.plot(x, y, marker='o', label='Trajetória')
-
-# Vetor AB
-plt.quiver(
-    A[0], A[1],
-    AB[0], AB[1],
-    angles='xy',    scale_units='xy',    scale=1,    label='Vetor AB')
-
-# Vetor BC
-plt.quiver(
-    B[0], B[1],
-    BC[0], BC[1],
-    angles='xy',    scale_units='xy',    scale=1,    label='Vetor BC')
-
-# Identificação dos pontos
-plt.text(A[0], A[1], 'A')
-plt.text(B[0], B[1], 'B')
-plt.text(C[0], C[1], 'C')
-
-plt.title(
-    "Exercício 1 | Trajeto retilíneo e curva\n"
-    f"Dist AB: {dist_AB:.2f} | "
-    f"Dist BC: {dist_BC:.2f} | "
-    f"Ângulo: {theta_graus:.1f}°"
-)
-
-plt.xlabel("Eixo X")
-plt.ylabel("Eixo Y")
-plt.grid(True)
-plt.legend()
-plt.axis('equal')
-
-plt.show()
+# Exibição dos resultados na tela
+print(f"a) Produto escalar (u . v) = {produto_escalar:.2f}")
+print(f"b) Norma de v ao quadrado (||v||²) = {norma_v_quadrado:.2f}")
+print(f"   Coeficiente k = {k:.2f}")
+print(f"c) Vetor Projeção proj_v(u) = {proj_v_u}")
